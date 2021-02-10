@@ -1,4 +1,5 @@
-let PokemonList = [{name:'Pikachu',height:0.5, types:['electric']},
- {name: 'Pikachu', height:0.6,  types:['electric']},
- {name: 'Jigglypuff',height:0.5,types:['normal','fairy']}
-];
+let PokemonList = [
+    {name:'Pikachu',height:0.9,types:['electric']},
+    {name:'Clefairy',height:1.1,types:['fairy']},
+    {name:'Jigglypuff',height:1.08,types:['normal','fairy']}
+  ]
