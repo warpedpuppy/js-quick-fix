@@ -1,21 +1,15 @@
 let PokemonList = [
-    {name:'Pikachu',height:0.9,types:['electric']},
-    {name:'Clefairy',height:0.5,types:['fairy']},
-    {name:'Jigglypuff',height:1.8,types:['normal','fairy']}
-  ]
-  for (let i=0; i < PokemonList.length; i++){
-    console.log(`Name: ${PokemonList[i].name}
-               (height: ${PokemonList[i].height})`)
+    {name:'Pikachu',height:0.9,types:['Electric']},
+    {name:'Clefairy',height:0.5,types:['Fairy']},
+    {name:'Jigglypuff',height:1.8,types:['Normal',' Fairy']}
+  ];
 
-       if(PokemonList[i].height > 1){
-       document.write (`
-         <div class="Pokemon-gird__item">
-         Name: ${PokemonList[i].name} (height: ${PokemonList[i].height})
-         'Oh! It is a big one!'`)
-       } else {
-       document.write(`
-         <div class="Pokemon-gird__item">
-         Name: ${PokemonList[i].name}
-         (height: ${PokemonList[i].height})`)
-     }
-    }
+  (function () {
+      PokemonList.forEach(function(display) {
+
+        if (display.height > 1 ) {
+           document.write( display.name + ' ' + 'Height: ' + display.height + ' ' + 'Type:'+ display.types + ' ' + 'Woo, that \'s a big one!' + '<p> </p>');
+      } else {
+          document.write(display.name + ' ' + 'Height: ' + display.height + ' ' + 'Type:'+ display.types + ' ' + '<p> </p>');
+      }});
+  })();
