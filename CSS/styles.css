@@ -2,16 +2,20 @@
 * {
   box-sizing: border-box;
 }
-main {
-  margin: 150px;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 20px;
-  }
-
-  .grid__item {
-    background-color: white;
-    padding: 10px;
-  }
+ul {
+  list-style-type:none;
+}
+.button-class {
+  /* background-color: #764A41;  */
+  /* border: none;
+  color: lightgray; */
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  background-color: lightgray;
+  color: #764A41;
+  border: none;
+}
