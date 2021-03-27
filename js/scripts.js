@@ -1,48 +1,85 @@
-let PokemonRepository =(function () {
-  let PokemonList = [
-    {name:'Pikachu',height:0.9,types:['Electric']},
-    {name:'Clefairy',height:0.5,types:['Fairy']},
-    {name:'Jigglypuff',height:1.8,types:['Normal','Fairy']}
-  ];
+let PokemonRepository = (function () {
+  let PokemonList = [];
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
   function add(pokemonDisplay) {
-    PokemonList.push(pokemonDisplay);
+    if (
+      typeof pokemonDisplay === "object" &&
+      "name" in pokemonDisplay
+    ) {
+      PokemonList.push(pokemonDisplay);
+    } else {
+      console.log("pokemon is not correct");
+    }
   }
 
-  function getAll () {
+  function getAll() {
     return PokemonList;
   }
 
-  function addListItem(pokemonDisplay){
-    let pokemonList= document.querySelector ('.pokemon-list');
-    let listPokemon = document.createElement ('li');
-    let button = document.createElement('button');
-    button.innerText= pokemonDisplay.name;
-    button.classList.add('button-class');
-    listPokemon.appendChild(button);
-    pokemonList.appendChild (listPokemon);
-    button.addEventListener ('click',function (event) {
+  function addListItem(pokemonDisplay) {
+    let PokemonList = document.querySelector(".pokemon-list");
+    let listpokemon = document.createElement("li");
+    let button = document.createElement("button");
+    button.innerText = pokemonDisplay.name;
+    button.classList.add("button-class");
+    listpokemon.appendChild(button);
+    PokemonList.appendChild(listpokemon);
+    button.addEventListener("click", function(event) {
       showDetails(pokemonDisplay);
     });
   }
-  function showDetails (pokemonDisplay){
-    let text='Woo! It is big!'
-    if (pokemonDisplay.height>1){
-      console.log(pokemonDisplay.name);
-      console.log(text);
-    }else{
-      console.log (pokemonDisplay.name);
-    }
+
+  function loadList() {
+    return fetch(apiUrl).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      json.results.forEach(function (item) {
+        let pokemonDisplay = {
+          name: item.name,
+          detailsUrl: item.url
+        };
+        add(pokemonDisplay);
+        console.log(pokemonDisplay);
+      });
+    }).catch(function (e) {
+      console.error(e);
+    });
   }
+
+  function loadDetails(item) {
+    let url = item.detailsUrl;
+    return fetch(url).then(function (response) {
+      return response.json();
+    }).then(function (details) {
+      // Now we add the details to the item
+      item.imageUrl = details.sprites.front_default;
+      item.height = details.height;
+      item.types = details.types;
+    }).catch(function (e) {
+      console.error(e);
+    });
+  }
+
+  function showDetails(item) {
+    PokemonRepository.loadDetails(item).then(function () {
+      console.log(item);
+    });
+  }
+
   return {
-    add:add,
-    getAll:getAll,
-    addListItem:addListItem
+    add: add,
+    getAll: getAll,
+    addListItem: addListItem,
+    loadList: loadList,
+    loadDetails: loadDetails,
+    showDetails: showDetails
   };
-}) ();
+})();
 
-PokemonRepository.add ({ name:'Cledairy', height:2 , types: ['Fairy']});
 
-PokemonRepository.getAll().forEach(function(pokemonDisplay){
-  PokemonRepository.addListItem(pokemonDisplay);
+PokemonRepository.loadList().then(function () {
+  PokemonRepository.getAll().forEach(function (pokemonDisplay) {
+    PokemonRepository.addListItem(pokemonDisplay);
+  });
 });
