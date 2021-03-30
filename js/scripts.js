@@ -60,12 +60,42 @@ let PokemonRepository = (function () {
       console.error(e);
     });
   }
+  function showModal( Type,Height) {
+
+      let modal= document.createElement('div');
+      modal.classList.add('modal');
+       let closeButtonElement = document.createElement('button');
+      closeButtonElement.classList.add('modal-close');
+      closeButtonElement.innerText ='X';
+      closeButtonElement.addEventListener('click',hideModal);
+      let TypeElement = document.createElement ('h1');
+      let HeightElement = document.createElement('p');
+      modal.appendChild(closeButtonElement);
+      modal.appendChild(TypeElement);
+      modal.appendChild(HeightElement);
+
+      modalContainer.classList.add('is-visible');
+
+    }
+    function hideModal() {
+      modalContainer.classList.remove('is-visible');
+    }
 
   function showDetails(item) {
     PokemonRepository.loadDetails(item).then(function () {
       console.log(item);
     });
   }
+
+  document.querySelector('#show-modal').addEventListener ('click',()=> {
+  showModal();
+});
+
+  window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+    hideModal();
+  }
+});
 
   return {
     add: add,
