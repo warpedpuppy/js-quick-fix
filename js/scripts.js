@@ -1,6 +1,8 @@
 let PokemonRepository = (function () {
   let PokemonList = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+  
+
 
   function add(pokemonDisplay) {
     if (
@@ -60,7 +62,7 @@ let PokemonRepository = (function () {
       console.error(e);
     });
   }
-  function showModal( Type,Height) {
+  function showModal(pokemonDisplayHeight, pokemonDisplayTypes) {
 
       let modal= document.createElement('div');
       modal.classList.add('modal');
@@ -68,22 +70,31 @@ let PokemonRepository = (function () {
       closeButtonElement.classList.add('modal-close');
       closeButtonElement.innerText ='X';
       closeButtonElement.addEventListener('click',hideModal);
-      let TypeElement = document.createElement ('h1');
-      let HeightElement = document.createElement('p');
+      
+      let pokemonDisplayHeightElement = item.height;
+      let pokemonDisplayTypesElement = item.types;
+      
+      let pokemonDisplayHeightElement = document.createElement ('h1');
+      let pokemonDisplayTypesElement = document.createElement('p');
+      
       modal.appendChild(closeButtonElement);
-      modal.appendChild(TypeElement);
-      modal.appendChild(HeightElement);
-
+      modal.appendChild(pokemonDisplayTypesElement);
+      modal.appendChild(pokemonDisplayHeightElement);
+      
+      let modalContainer= document.getElementById('modal-container');
+      modalContainer.appendChild(modal);
       modalContainer.classList.add('is-visible');
-
-    }
+ }
     function hideModal() {
+      
+      let modalContainer= document.getElementById('modal-container');
+      modalContainer.appendChild(modal);
       modalContainer.classList.remove('is-visible');
     }
 
   function showDetails(item) {
     PokemonRepository.loadDetails(item).then(function () {
-      console.log(item);
+      console.log(item),
     });
   }
 
@@ -103,7 +114,9 @@ let PokemonRepository = (function () {
     addListItem: addListItem,
     loadList: loadList,
     loadDetails: loadDetails,
-    showDetails: showDetails
+    showDetails: showDetails,
+
+
   };
 })();
 
