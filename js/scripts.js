@@ -8,6 +8,7 @@ let PokemonRepository = (function () {
       return response.json();
     }).then(function (json) {
       json.results.forEach(function (item) {
+        
         let pokemonDisplay = {
           name: item.name,
           detailsUrl: item.url
@@ -38,21 +39,41 @@ let PokemonRepository = (function () {
   }
 
   function addListItem(pokemonDisplay) {
-    let PokemonList = $(".pokemon-list");
-    let listpokemon = $('<li class = group-list-item></li>'); 
-    listpokemon.addClass = $('pokemon');
-    listpokemon.addClass = $('col-12');
+  //   let PokemonList = document.querySelector(".pokemon-list");
+  //   let listpokemon = document.createElement("li");
+  //   let button = document.createElement("button");
+  //      button.innerText = pokemonDisplay.name;
+  //      button.classList.add("button-class");
     
-    
-    let button = $(".btn btn-primary");
-    button.innerText = pokemonDisplay.name;
+  //      listpokemon.appendChild(button);
+  //      PokemonList.appendChild(listpokemon);
+       
+  //      button.addEventListener("click", function(event) {
+  //     showDetails(pokemonDisplay);
+  //   });
+  // }
 
-    listpokemon.append(button);
-    PokemonList.append(listpokemon);
-    button.on("click", function() {
+
+    let PokemonList = $(".pokemon-list");
+    let PokemonListItem = $('<li></li>'); 
+    let button = $("button");
+    button.innerText = pokemonDisplay.name;
+    button.addClass("btn btn-primary");
+  
+    button.attr("data-target", "#pokemonModal", "data-toggel", "modal-content");
+  
+   PokemonListItem.append(button);
+    PokemonList.append(PokemonListItem);
+  
+    button.on("click", function(event) {
       showDetails(pokemonDisplay);
     });
   }
+  
+  
+  
+  
+  
   
   function showDetails(item) {
     loadDetails(item).then(function () {
@@ -93,7 +114,7 @@ let PokemonRepository = (function () {
     // let pokemonDisplayTypesElement = document.createElement('h2');
     // pokemonDisplayTypesElement.innerHTML = "Height:" + " " + pokemon.height
 
-    let pokemonDisplayImageElement= ('<img class= "modal-img" style= "width:50% ">')
+    let pokemonDisplayImageElement= $('<img class= "modal-img" style= "width:50% ">')
     pokemonDisplayImageElement.attr("src", pokemon.imageUrl);
 
     // let pokemonDisplayImageElement =  document.createElement('img');
