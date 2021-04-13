@@ -1,7 +1,6 @@
 let PokemonRepository = (function () {
   let PokemonList = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-  let modalContainer= document.getElementById('modal-container');
   
   function loadList() {
     return fetch(apiUrl).then(function (response) {
@@ -21,8 +20,6 @@ let PokemonRepository = (function () {
     });
   }
   
-
-
   function add(pokemonDisplay) {
     if (
       typeof pokemonDisplay === "object" &&
@@ -45,21 +42,15 @@ let PokemonRepository = (function () {
     let button = $("<button></button>"); 
     button.text(pokemonDisplay.name);
     button.addClass("btn btn-primary");
-  
+
     button.attr("data-target", "#pokemonModal").attr("data-toggel", "modal-content");
-   PokemonList.append(PokemonListItem);
-   PokemonListItem.append(button);
-   
-  
+    PokemonList.append(PokemonListItem);
+    PokemonListItem.append(button);
+
     button.on("click", function(event) {
       showDetails(pokemonDisplay);
     });
   }
-  
-  
-  
-  
-  
   
   function showDetails(item) {
     loadDetails(item).then(function () {
@@ -67,7 +58,6 @@ let PokemonRepository = (function () {
       showModal(item)
     });
   }
-
 
   function loadDetails(item) {
     let url = item.detailsUrl;
@@ -98,17 +88,15 @@ let PokemonRepository = (function () {
     modal.append(pokemonDisplayNameElement);
     modal.append(pokemonDisplayImageElement);
     modal.append(pokemonDisplayTypesElement);
-
     let modalContainer= $('#modal-container');
     modalContainer.append(modal);
     modalContainer.addClass('is-visible');
  }
-    function hideModal() {
-      
-      let modalContainer= $('#modal-container');
-      modalContainer.empty(); 
-      modalContainer.removeClass('is-visible');
-    }
+  function hideModal() {
+    let modalContainer= $('#modal-container');
+    modalContainer.empty(); 
+    modalContainer.removeClass('is-visible');
+  }
 
   return {
     add: add,
@@ -118,13 +106,12 @@ let PokemonRepository = (function () {
     loadDetails: loadDetails,
     showDetails: showDetails,
   };
+
 })();
 
 
 PokemonRepository.loadList().then(function () {
   PokemonRepository.getAll().forEach(function (pokemonDisplay) {
-    PokemonRepository.addListItem(pokemonDisplay); {
-
-    }
+    PokemonRepository.addListItem(pokemonDisplay);
   });
 });
